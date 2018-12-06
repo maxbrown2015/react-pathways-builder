@@ -5,6 +5,8 @@ import express from 'express';
 import path from 'path';
 import ejs from 'ejs';
 
+
+
 let app = express();
 const port = process.env.PORT || 3000;
 
@@ -25,9 +27,6 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.get('/export', (req, res) => {
-  res.json(JSON.parse(req.query.data));
-});
 
 // Start server
 app.listen(app.get('port'), () => {
