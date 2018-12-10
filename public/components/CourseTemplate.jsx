@@ -35,6 +35,7 @@ class CourseTemplate extends React.Component {
   createNewCourse() {
     if (!this.validateNewCourse()) {
       this.toggleActive();
+      console.log('not validated');
       return;
     }
 
@@ -80,13 +81,14 @@ class CourseTemplate extends React.Component {
       alert('Course number was invalid format: xxx or xxxx');
       return false;
     }
+    let result = true;
     this.props.store.getState().courses.forEach((course) => {
       if (this.state.number === course.number) {
         alert('Course number is already in use');
-        return false;
+        result = false;
       }
     });
-    return true;
+    return result;
   }
 
   validateDescriptionAndTitle() {
@@ -109,9 +111,6 @@ class CourseTemplate extends React.Component {
     }
     return true;
   }
-
-
-
 
   render() {
     const formContainerStyle = {
@@ -151,7 +150,7 @@ class CourseTemplate extends React.Component {
         New Course Form
       </Flexbox>
       <Flexbox flexDirection='row' width='100%' height='400px'>
-        <Flexbox style={formContainerStyle} flexDirection='column' width='70%'>
+        <Flexbox style={formContainerStyle} flexDirection='column' width='60%'>
         <form style={formStyle} onSubmit={this.handleSubmit}>
               <span style={headerStyle} >Number</span>
                 <textarea name='number' value={this.state.number} onChange={this.handleTextChange} cols={40} rows={2} />
@@ -166,7 +165,7 @@ class CourseTemplate extends React.Component {
                 <textarea name='link' value={this.state.link} onChange={this.handleTextChange} cols={40} rows={2} />
           </form>
         </Flexbox>
-        <Flexbox flexDirection="column" width='30%' marginTop='50px'>
+        <Flexbox flexDirection="column" width='40%' marginTop='50px'>
           <PathwayPicker store={this.props.store} notifyParentOfChange={this.updateSelectedPathways} selected={this.state.selectedPathways}/>
         </Flexbox>
       </Flexbox>

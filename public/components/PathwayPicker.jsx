@@ -77,7 +77,7 @@ class PathwayPicker extends React.Component {
     const boxStyle = {
       marginTop: '7.5px',
       marginBottom: '7.5px',
-      marginLeft: '10px',
+      marginLeft: '5px',
       fontSize: '20px'
     }
 
@@ -85,8 +85,8 @@ class PathwayPicker extends React.Component {
       const nameStyle = {
         marginTop: '5px',
         marginBottom: '5px',
-        marginRight: '15px',
-        fontSize: '15px'
+        marginRight: '5px',
+        fontSize: '13px'
       }
       const name = this.lookupPathwayName(item.id);
       const checked = item.active;

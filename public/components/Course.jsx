@@ -63,6 +63,8 @@ class Course extends React.Component {
 
   acceptChanges() {
     if (!this.validateCourseState()) {
+      console.log('not validates');
+      this.toggleEditMode();
       return;
     }
 
@@ -75,11 +77,8 @@ class Course extends React.Component {
       selectedPathways: this.state.selectedPathways,
     }
 
-    this.setState((prevState) => ({
-      editViewActive: !prevState.editViewActive
-    }));
-
     this.props.store.dispatch(actions.changeCourse(this.props.index, newCourse));
+    this.toggleEditMode();
   }
 
   deleteCourse() {
@@ -118,7 +117,15 @@ class Course extends React.Component {
     // check if title is a valid string
     // check if description is a valid string
     // check if link is valid 
-    return this.validateDescriptionAndTitle() && this.validateLink()
+    return this.validateDescriptionAndTitle() && this.validateLink() && this.validatePathways();
+  }
+
+  validatePathways() {
+    if (this.state.selectedPathways.length === 0) {
+      alert('A course must belong to atleast one pathway');
+      return false;
+    }
+    return true;  
   }
 
 
@@ -164,7 +171,8 @@ class Course extends React.Component {
 
     let markup = items.map((item, index) => {
       const style  = {
-        margin: '5px'
+        margin: '5px',
+        color: item.color
       }
       return (<Flexbox key={index} style={style}>{item.name}</Flexbox>);
     });
@@ -338,7 +346,7 @@ class Course extends React.Component {
   }
 
   render() {
-    console.log("rendered");
+    console.log("rendered " + this.props.number);
     return this.renderDefaultCourseView();
       
   }

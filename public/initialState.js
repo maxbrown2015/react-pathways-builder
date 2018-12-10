@@ -1,72 +1,72 @@
 const pathways = [
   {
-    name: "pathway_1",
-    id: "p_1",
-    color: "",
-    highlight: "",
+    name: "Law and Society",
+    id: "law_society",
+    color: "779f77",
+    highlight: "abc9a5",
     description: ""    
   },
   {
-    name: "pathway_2",
-    id: "p_2",
-    color: "",
-    highlight: "",
+    name: "Borders and Immigration",
+    id: "border_immigration",
+    color: "#33EC65",
+    highlight: "#79f099",
     description: ""
   }, 
   {
-    name: "pathway_3",
-    id: "p_3",
-    color: "",
-    highlight: "",
+    name: "Intellectual Life",
+    id: "intellectual_cultural",
+    color: "#61c0bf",
+    highlight: "#b1f2f1",
     description: ""
   },
   {
-    name: "pathway_4",
-    id: "p_4",
-    color: "",
-    highlight: "",
+    name: "Economic History",
+    id: "economic_history",
+    color: "#8db9f6",
+    highlight: "#97baea",
     description: ""
   },
   {
-    name: "pathway_5",
-    id: "p_5",
-    color: "",
-    highlight: "",
+    name: "War, Peace and Diplomacy",
+    id: "war_peace",
+    color: "#4169e1",
+    highlight: "#85a0f0",
     description: ""
   },
   {
-    name: "pathway_6",
-    id: "p_6",
-    color: "",
-    highlight: "",
+    name: "Religious Communities",
+    id: "religious_communities",
+    color: "#eddbff",
+    highlight: "#f3e7ff",
     description: ""
   },
   {
-    name: "pathway_7",
-    id: "p_7",
-    color: "",
-    highlight: "",
+    name: "Human Rights",
+    id: "human_rights",
+    color: "#c68642",
+    highlight: "#e0ac69",
     description: ""
   },
   {
-    name: "pathway_8",
-    id: "p_8",
-    color: "",
-    highlight: "",
+    name: "Slavery and Race",
+    id: "slavery_race",
+    color: "#f3cc07",
+    highlight: "#f6e484",
     description: ""
   },
   {
-    name: "pathway_9",
-    id: "p_9",
-    color: "",
-    highlight: "",
+    name: "Politics and Revolution",
+    id: "politics_revolution",
+    color: "#e77878",
+    highlight: "#e58e8e",
     description: ""
   },
   {
-    name: "pathway_10",
-    id: "p_10",
-    color: "",
-    highlight: "",
+    name: "Gender and Sexuality",
+    id: "gender_sexuality",
+    color: "#ff9454",
+    highlight: "#f29f7a",
     description: ""
   },
 ]
@@ -78,21 +78,21 @@ const courses = [
     title: "test1",
     description: "",
     link: "",
-    selectedPathways: ["p_1", "p_2","p_3"]
+    selectedPathways: ["gender_sexuality", "war_peace","politics_revolution"]
   },
   { 
   number: "002",
   title: "test2",
   description: "",
   link: "",
-  selectedPathways: ["p_1", "p_2", "p_3"]
+  selectedPathways: ["gender_sexuality", "war_peace","politics_revolution"]
   },
   { 
     number: "003",
     title: "test3",
     description: "",
     link: "",
-    selectedPathways: ["p_1", "p_2"]
+    selectedPathways: ["gender_sexuality", "war_peace","politics_revolution"]
   }
 ]
 

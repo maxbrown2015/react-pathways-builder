@@ -14,6 +14,7 @@ class CourseCatalog extends React.Component {
     this.renderCourses.bind(this);
     this.renderButtons.bind(this);
 
+
     this.state = {
       reduxState: {},
       newCourseViewActive: false,
@@ -21,6 +22,8 @@ class CourseCatalog extends React.Component {
       exportPromptActive: false,
       searchValue: "",
     }
+
+
 
     this.undoChanges = this.undoChanges.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
@@ -40,7 +43,6 @@ class CourseCatalog extends React.Component {
   }
 
   componentDidMount() {
-    console.log('mounted');
     this.props.store.subscribe(() => {
       this.setState({reduxState: this.props.store.getState()});
     });
@@ -199,7 +201,7 @@ class CourseCatalog extends React.Component {
       <Flexbox height='200px' width='100%' flexDirection="column" alignItems='center'>
         <Flexbox flexDirection='row' height="20%" width='100%' alignSelf='center'  marginTop='50px'   alignItems='center' justifyContent='center' 
         style={deleteMessageStyle} >
-          Are you sure you want to reset the changes made during this session? 
+          Would you like to export your changes? This change cannot be undone.  
         </Flexbox>
         <Flexbox flexDirection='row' alignItems='center' justifyContent='center' marginTop='50px'>
         <Flexbox  marginLeft='50%'>

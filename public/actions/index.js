@@ -44,12 +44,12 @@ const exportData = () => {
   };
 }
 
-const initializeState = () => {
+const cacheState = () => {
   return {
-    type: 'INITIALIZE'
+    type: 'CACHE'
   };
 }
 
 
 
-export {changeCourse, deleteCourse, addCourse, changePathway, undoChanges, exportData, initializeState};
+export {changeCourse, deleteCourse, addCourse, changePathway, undoChanges, exportData, cacheState};
