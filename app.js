@@ -25,7 +25,6 @@ app.set('view engine', 'html');
 
 // Host static files on URL path
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'dummy-app')));
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -46,14 +45,6 @@ mongoose.connect(dbURI,function(err){
 
 global.mongoose = mongoose;
 
-
-// Use express Router middleware for root path
-// app.use(app.router);
-/*
-app.get('/', (req, res) => {
-  res.render('dummy-app/index.html');
-});
-*/
 
 app.get('/editor', (req, res) => {
   res.render('views/index');
