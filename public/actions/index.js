@@ -38,6 +38,18 @@ const undoChanges = () => {
   };
 }
 
+const exportData = () => {
+  return {
+    type: 'EXPORT'
+  };
+}
+
+const initializeState = () => {
+  return {
+    type: 'INITIALIZE'
+  };
+}
 
 
-export {changeCourse, deleteCourse, addCourse, changePathway, undoChanges};
+
+export {changeCourse, deleteCourse, addCourse, changePathway, undoChanges, exportData, initializeState};

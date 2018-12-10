@@ -24,7 +24,7 @@ class PathwayPicker extends React.Component {
     this.notifyParent = this.notifyParent.bind(this);
     this.lookupPathwayName = this.lookupPathwayName.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
-    console.log(this.state);
+
   }
 
   notifyParent() {
@@ -37,7 +37,7 @@ class PathwayPicker extends React.Component {
 
   handleSelect() {
     if (this.state.numberOfChecked === 3 && event.target.checked) {
-      alert('no');
+      alert('You cannot select more than 3 pathways');
       return;
     }
 
@@ -55,11 +55,10 @@ class PathwayPicker extends React.Component {
       let newState = prevState.pathwaysActiveOrNot.splice(0);
       newState.forEach((item, index) => {
         if (item.id === event.target.name) {
-          console.log(item.id);
           item.active = !item.active;
         }
       });
-      //console.log(newState);
+
       return {pathwaysActiveOrNot: newState, numberOfChecked: number}
     }, () => this.notifyParent())
   }
@@ -78,7 +77,8 @@ class PathwayPicker extends React.Component {
     const boxStyle = {
       marginTop: '7.5px',
       marginBottom: '7.5px',
-      marginLeft: '10px'
+      marginLeft: '10px',
+      fontSize: '20px'
     }
 
     const markup = this.state.pathwaysActiveOrNot.map((item, index) => {

@@ -5,12 +5,11 @@ import FontAwesome from 'react-fontawesome';
 import Popup from 'reactjs-popup';
 import PathwayPicker from './PathwayPicker'
 
+
 class Course extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showValidationFailedView: false,
-      newlyCreated: this.props.settings.newlyCreated,
       deletePromptActive: false,
       editViewActive: false,
 
@@ -23,7 +22,6 @@ class Course extends React.Component {
 
     this.renderCourseEditView = this.renderCourseEditView.bind(this);
     this.renderDefaultCourseView = this.renderDefaultCourseView.bind(this);
-    this.renderValidationFailedView = this.renderValidationFailedView.bind(this);
     this.renderPromptForDeleteCourse = this.renderPromptForDeleteCourse.bind(this);
     this.renderPathwayNames = this.renderPathwayNames.bind(this);
 
@@ -33,12 +31,20 @@ class Course extends React.Component {
     this.updateSelectedPathways = this.updateSelectedPathways.bind(this);
 
     this.toggleEditMode = this.toggleEditMode.bind(this);
-    this.validateCourseState = this.validateCourseState.bind(this);
     this.toggleDeletePrompt = this.toggleDeletePrompt.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
+
+    this.validateCourseState = this.validateCourseState.bind(this);
+    this.validateLink = this.validateLink.bind(this);
+    this.validateDescriptionAndTitle = this.validateDescriptionAndTitle.bind(this);
+
   }
 
-  componentDidMount() {
+  componentWillUnmount() {
+    console.log(this.props.index);
+  }
+
+  componentWillMount() {
     this.props.store.subscribe(function () {
       this.setState(this.props.store.getState());
     }.bind(this));
@@ -56,6 +62,9 @@ class Course extends React.Component {
   }
 
   acceptChanges() {
+    if (!this.validateCourseState()) {
+      return;
+    }
 
     // make new course
     const newCourse = {
@@ -76,6 +85,7 @@ class Course extends React.Component {
   deleteCourse() {
     console.log("deleting course: " + this.props.index);
     this.props.store.dispatch(actions.deleteCourse(this.props.index));
+    this.toggleDeletePrompt();
   }
 
  toggleEditMode() {
@@ -103,19 +113,36 @@ class Course extends React.Component {
     }));
   }
 
-
-  // validate everyting
-  showValidationFailed() {
-    setInterval(() => {
-      this.setState((prevState) => ({
-        showValidationFailedView: !prevState.showValidationFailedView
-      }));
-    }, 1000);
-  }
-
   validateCourseState() {
-      return true;
+    // check if number is valid
+    // check if title is a valid string
+    // check if description is a valid string
+    // check if link is valid 
+    return this.validateDescriptionAndTitle() && this.validateLink()
   }
+
+
+  validateDescriptionAndTitle() {
+    if (!RegExp(/^[a-zA-Z0-9]*$/).test(this.state.description)) { 
+      alert('Description contains invalid characters');
+      return false;
+    }
+    if (!RegExp(/^[a-zA-Z0-9]*$/).test(this.state.title)) {
+      alert('Title contains invalid characters');
+      return false;
+    }
+    return true;
+  }
+
+  validateLink() {
+    if (!RegExp(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/).test(this.state.link)) {
+      alert('Invalid Link Format');
+      return false;
+    }
+    return true;
+  }
+
+
 
   toggleDeletePrompt() {
     this.setState((prevState) => {
@@ -145,10 +172,6 @@ class Course extends React.Component {
     return markup;
   }
 
-  renderValidationFailedView() {
-    return <div></div>
-  }
-
   renderPromptForDeleteCourse() {
     const deleteMessageStyle = {
       fontSize: '20px',
@@ -157,21 +180,21 @@ class Course extends React.Component {
     }
 
     const confirmStyle = {
-      fontSize: '30px',
+      fontSize: '50px',
       color: 'green',
     }
 
     const declineStyle = {
-      fontSize: '30px',
+      fontSize: '50px',
       color: 'red',
     }
 
-    return (<Flexbox display='inline-flex' height='300px' width='100%' flexDirection="column" alignItems='center'>
-    <Flexbox flexDirection='row' height="20%" width='100%' alignSelf='center' alignItems='center' justifyContent='center' 
+    return (<Flexbox height='200px' width='100%' flexDirection="column" alignItems='center'>
+    <Flexbox flexDirection='row' height="20%" width='100%' alignSelf='center'  marginTop='50px'   alignItems='center' justifyContent='center' 
     style={deleteMessageStyle} >
     Are you sure you want to delete HIST-{this.props.number}: {this.props.title}
     </Flexbox>
-    <Flexbox flexDirection='row' alignItems='center' justifyContent='center'>
+    <Flexbox flexDirection='row' alignItems='center' justifyContent='center' marginTop='50px'>
     <Flexbox  marginLeft='50%'>
     <FontAwesome name='fa-check-circle' className='fa-check-circle' style={confirmStyle} onClick={this.deleteCourse}/> 
     </Flexbox >
@@ -180,10 +203,14 @@ class Course extends React.Component {
     </Flexbox>
     </Flexbox>
     </Flexbox>)
-
   }
 
-  renderCourseEditView() { 
+  renderCourseEditView() {
+    const divStyle = {
+      backgroundColor: '#f2f2f2',
+      fontSize: '35px'
+    }
+
     const formContainerStyle = {
       fontSize: '20px'
     }
@@ -191,12 +218,13 @@ class Course extends React.Component {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-start',
-      marginRight: '50px'
+      marginRight: '50px',
+      marginLeft: '20px'
     }
 
     const headerStyle = {
       textAlign: 'center',
-      margin: '20px'
+      margin: '20px',
     }
 
     const confirmStyle = {
@@ -211,9 +239,9 @@ class Course extends React.Component {
 
 
     return (
-    <Flexbox height='600px' width='100%' flexDirection="column">
+    <Flexbox height='600px' width='100%' flexDirection="column" style={divStyle}>
       <Flexbox height="100px" width="100%"  alignSelf='center' alignItems='center' justifyContent='center'>
-      <p>HIST-{this.props.title}</p>
+      <p>HIST-{this.props.number}:{"   "}{this.props.title}</p>
       </Flexbox>
       <Flexbox flexDirection='row' width='100%' height='400px'>
         <Flexbox style={formContainerStyle} flexDirection='column' width='70%'>
@@ -228,7 +256,7 @@ class Course extends React.Component {
                 <textarea name='link' value={this.state.link} onChange={this.handleTextChange} cols={40} rows={2} />
           </form>
         </Flexbox>
-        <Flexbox flexDirection="column" width='30%'>
+        <Flexbox flexDirection="column" width='30%'  marginTop='50px'>
           <PathwayPicker store={this.props.store} notifyParentOfChange={this.updateSelectedPathways} selected={this.props.selectedPathways}/>
         </Flexbox>
       </Flexbox>
@@ -274,7 +302,9 @@ class Course extends React.Component {
 
   renderDefaultCourseView() {
     const divStyle = {
-      border: '1px solid black',
+      borderRadius: '10px',
+      border: '1px solid #5edcee',
+        backgroundColor: '#f2f2f2'
     }
 
     const headerStyle = {
@@ -283,7 +313,7 @@ class Course extends React.Component {
 
 
   return (
-  <Flexbox flexDirection="row" minHeight="10vh" width="70vw"  marginBottom="20px" style={divStyle} alignItems="center">
+  <Flexbox flexDirection="row" minHeight="10vh" width="70vw" marginBottom="20px" style={divStyle} alignItems="center">
   <Flexbox flexDirection="column" height='100%' width="95%">
       <Flexbox element="header" height="60px" width="100%" style={headerStyle} alignItems="center" justifyContent="center" >
         HIST-{this.props.number} {this.props.title}
@@ -298,22 +328,18 @@ class Course extends React.Component {
   }
 
   renderPopups() {
-    return (<Flexbox><Popup position="top center"  open={this.state.deletePromptActive} closeOnDocumentClick={true}>
+    return (<Flexbox><Popup position="top center"  open={this.state.deletePromptActive} closeOnDocumentClick={false}>
     {this.renderPromptForDeleteCourse()}
   </Popup>
-  <Popup position="top center"  open={this.state.editViewActive} closeOnDocumentClick={true}>
+  <Popup position="top center"  open={this.state.editViewActive} closeOnDocumentClick={false}>
     {this.renderCourseEditView()}
     </Popup> </Flexbox>); 
 
   }
 
-
-
-
   render() {
     console.log("rendered");
-
-        return this.  renderDefaultCourseView();
+    return this.renderDefaultCourseView();
       
   }
 }

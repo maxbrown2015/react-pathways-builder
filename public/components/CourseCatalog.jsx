@@ -3,6 +3,10 @@ import Course from './Course';
 import * as actions from '../actions/index.js';
 import Flexbox from 'flexbox-react';
 import FontAwesome from 'react-fontawesome';
+import CourseTemplate from './CourseTemplate';
+import Popup from 'reactjs-popup';
+import SearchBar from '@opuscapita/react-searchbar';
+
 
 class CourseCatalog extends React.Component {
   constructor(props) {
@@ -10,42 +14,96 @@ class CourseCatalog extends React.Component {
     this.renderCourses.bind(this);
     this.renderButtons.bind(this);
 
-    this.addCourse = this.addCourse.bind(this);
+    this.state = {
+      reduxState: {},
+      newCourseViewActive: false,
+      areYouSureViewActive: false,
+      exportPromptActive: false,
+      searchValue: "",
+    }
+
     this.undoChanges = this.undoChanges.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.exportCourses = this.exportCourses.bind(this);
+
+    this.toggleNewCourseView = this.toggleNewCourseView.bind(this);
+    this.toggleAreYouSurePrompt = this.toggleAreYouSurePrompt.bind(this);
+    this.toggleExportPrompt = this.toggleExportPrompt.bind(this);
+
+    this.renderNewCourseView = this.renderNewCourseView.bind(this);
+    this.renderAreYouSurePrompt = this.renderAreYouSurePrompt.bind(this);
+    this.renderExportPrompt = this.renderExportPrompt.bind(this);
+    this.renderSearchBar = this.renderSearchBar.bind(this);
+  
+    console.log(this.props.store.getState().courses)
 
   }
 
   componentDidMount() {
-    this.props.store.subscribe(function () {
-      this.setState(this.props.store.getState());
-    }.bind(this));
+    console.log('mounted');
+    this.props.store.subscribe(() => {
+      this.setState({reduxState: this.props.store.getState()});
+    });
   }
 
   undoChanges() {
     this.props.store.dispatch(actions.undoChanges());
+    this.toggleAreYouSurePrompt();
   }
 
-  addCourse() {
-    const course = {
-      
-    };
-    // this.props.store.dispatch(actions.addCourse(course));
+  exportCourses() {
+    this.props.store.dispatch(actions.exportData());
+    this.toggleExportPrompt();
+  }
+
+  toggleNewCourseView() {
+    this.setState((prevState) => ({
+      newCourseViewActive: !prevState.newCourseViewActive
+    }));
+  }
+
+  toggleAreYouSurePrompt() {
+    this.setState((prevState) => ({
+      areYouSureViewActive: !prevState.areYouSureViewActive
+    }));
+  }
+
+  toggleExportPrompt() {
+    this.setState((prevState) => ({
+      exportPromptActive: !prevState.exportPromptActive
+    }));
+  }
+  
+  handleSearch() {
+    this.setState(() => ({
+      searchValue : event.target.value
+    }));
   }
 
   renderCourses() {
-    const courses = this.props.store.getState().courses;
-    const settings = {
-      active: false,
-      newlyCreated: false,
+    let courses;
+    console.log(this.state.reduxState);
+    if (this.state.reduxState.courses === undefined) {
+      courses = this.props.store.getState().courses;
+    } else {
+      courses = this.state.reduxState.courses;
     }
 
-    const markup = courses.map((course, index) => {
-      return(<Course store={this.props.store} key={index} index={index} settings={settings}
+
+    const filteredCoursesBySearchValue = courses.filter((course) => {
+      return course.number.includes(this.state.searchValue) ||  course.title.includes(this.state.searchValue)
+    });
+
+    // console.log(filteredCoursesBySearchValue)
+
+    const markup = filteredCoursesBySearchValue.map((course, index) => {
+      return(<Course store={this.props.store} key={index} index={index}   
         number={course.number} title={course.title} description={course.description} 
         link={course.link} selectedPathways={course.selectedPathways}/>);
     });
     return markup;
   }
+
 
   renderButtons() {
     const addButtonStyle = {
@@ -58,27 +116,126 @@ class CourseCatalog extends React.Component {
       color: 'red'
     }
 
+    const exportButtonStyle = {
+      fontSize: '46px',
+      color: 'blue'
+    }
+
     return (
       <Flexbox flexDirection='row' justifyContent="center" alignItems="center" margin='20px'>
       <Flexbox  margin='50px'  marginTop='1px'>
-        <FontAwesome name='fa-plus' className='fa-plus' style={addButtonStyle} 
+        <FontAwesome name='fa-plus' className='fa-plus' style={addButtonStyle} onClick={this.toggleNewCourseView}
         /> 
       </Flexbox>
       <Flexbox margin='50px' marginTop='1px'>
-      <FontAwesome name='fa-undo' className='fa-undo' style={undoButtonStyle} onClick={this.undoChanges}
+      <FontAwesome name='fa-undo' className='fa-undo' style={undoButtonStyle} onClick={this.toggleAreYouSurePrompt}
         /> 
       </Flexbox>
+      <Flexbox margin='50px' marginTop='1px'>
+      <FontAwesome name='fa-upload' className='fa-upload' style={exportButtonStyle} onClick={this.toggleExportPrompt}
+        /> 
+      </Flexbox>
+
       </Flexbox>
     );
+  }
 
+  renderAreYouSurePrompt() {
+
+    const deleteMessageStyle = {
+      fontSize: '20px',
+      overflow: 'hidden',
+      textAlign:'center'
+    }
+
+    const confirmStyle = {
+      fontSize: '50px',
+      color: 'green',
+    }
+
+    const declineStyle = {
+      fontSize: '50px',
+      color: 'red',
+    }
+
+    return <Popup open={this.state.areYouSureViewActive}>
+      <Flexbox height='200px' width='100%' flexDirection="column" alignItems='center'>
+        <Flexbox flexDirection='row' height="20%" width='100%' alignSelf='center'  marginTop='50px'   alignItems='center' justifyContent='center' 
+        style={deleteMessageStyle} >
+          Are you sure you want to reset the changes made during this session? 
+        </Flexbox>
+        <Flexbox flexDirection='row' alignItems='center' justifyContent='center' marginTop='50px'>
+        <Flexbox  marginLeft='50%'>
+        <FontAwesome name='fa-check-circle' className='fa-check-circle' style={confirmStyle} onClick={this.undoChanges}/> 
+        </Flexbox >
+        <Flexbox marginLeft='50%'>
+        <FontAwesome name='fa-times' className='fa-times' style={declineStyle} onClick={this.toggleAreYouSurePrompt}/>
+        </Flexbox>
+        </Flexbox>
+      </Flexbox>
+    </Popup>
+  }
+
+  renderExportPrompt() {
+
+    const deleteMessageStyle = {
+      fontSize: '20px',
+      overflow: 'hidden',
+      textAlign:'center'
+    }
+
+    const confirmStyle = {
+      fontSize: '50px',
+      color: 'green',
+    }
+
+    const declineStyle = {
+      fontSize: '50px',
+      color: 'red',
+    }
+
+    return (
+    <Popup open={this.state.exportPromptActive}>
+      <Flexbox height='200px' width='100%' flexDirection="column" alignItems='center'>
+        <Flexbox flexDirection='row' height="20%" width='100%' alignSelf='center'  marginTop='50px'   alignItems='center' justifyContent='center' 
+        style={deleteMessageStyle} >
+          Are you sure you want to reset the changes made during this session? 
+        </Flexbox>
+        <Flexbox flexDirection='row' alignItems='center' justifyContent='center' marginTop='50px'>
+        <Flexbox  marginLeft='50%'>
+        <FontAwesome name='fa-check-circle' className='fa-check-circle' style={confirmStyle} onClick={this.exportCourses}/> 
+        </Flexbox >
+        <Flexbox marginLeft='50%'>
+        <FontAwesome name='fa-times' className='fa-times' style={declineStyle} onClick={this.toggleExportPrompt}/>
+        </Flexbox>
+        </Flexbox>
+      </Flexbox>
+    </Popup>
+    )
+  }
+
+  renderNewCourseView() {
+    return <Popup open={this.state.newCourseViewActive}><CourseTemplate store={this.props.store} notifyParent={this.toggleNewCourseView}/></Popup>
+  }
+
+  renderSearchBar() {
+    return <Flexbox flexDirection='row' alignSelf='center' marginBottom='50px' ><SearchBar onSearch={this.handleSearch} marginBottom='50px'
+    value={this.state.searchValue}/>
+    </Flexbox>
   }
 
 
   render() {
+    console.log('catalog rendered');
     return (
       <Flexbox flexDirection="column" justifyContent="center" alignItems="center">
-        {this.renderCourses()}
+        <Flexbox height='50px' width='100%' justifyContent="center" alignSelf='center'>Course Catalog</Flexbox>
+        {this.renderSearchBar()}
         {this.renderButtons()}
+        {this.renderCourses()}
+        {this.renderNewCourseView()}
+        {this.renderAreYouSurePrompt()}
+        {this.renderExportPrompt()}
       </Flexbox>
     )
   }
