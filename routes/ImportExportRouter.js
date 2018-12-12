@@ -7,7 +7,7 @@ const Pathway = require('../public/models/Pathway');
 router.route('/export').post((req, res) => {
   const courses = req.body.courses;
 
-  courses.sort(function(a, b) {
+  courses.sort(function (a, b) {
     const aNum = Number(a.number);
     const bNum = Number(b.number);
     return aNum - bNum;
@@ -38,7 +38,9 @@ router.route('/export').post((req, res) => {
       // add pathway
       const pathways = req.body.pathways;
       Pathway.remove({}, (err, res) => {
-        if (err) {console.log(err)}
+        if (err) {
+console.log(err)
+;}
         pathways.forEach((pathway) => {
           const pathwayModelItem = new Pathway({
             name: pathway.name,
@@ -48,27 +50,30 @@ router.route('/export').post((req, res) => {
             description: pathway.description,
           });
           pathwayModelItem.save((err, res) => {
-            if (err) {console.log(err)};
+            if (err) {
+console.log(err)
+;}
             console.log('Pathway saved successfully');
           });
         });
-      })
+      });
     }
   });
 });
 
 router.route('/import').get(function (req, res) {
-    Course.find((err, courses) => {
-    if (err){
+  Course.find((err, courses) => {
+    if (err) {
       console.log(err);
-    }
-    else {
+    } else {
       Pathway.find((err, pathways) => {
-        if (err) {console.log(err)};
+        if (err) {
+console.log(err)
+;}
         res.json({
           courses: courses,
           pathways: pathways,
-        })
+        });
       });
     }
   });

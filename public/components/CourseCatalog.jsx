@@ -20,8 +20,8 @@ class CourseCatalog extends React.Component {
       newCourseViewActive: false,
       areYouSureViewActive: false,
       exportPromptActive: false,
-      searchValue: "",
-    }
+      searchValue: '',
+    };
     
     this.undoChanges = this.undoChanges.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
@@ -36,7 +36,7 @@ class CourseCatalog extends React.Component {
     this.renderExportPrompt = this.renderExportPrompt.bind(this);
     this.renderSearchBar = this.renderSearchBar.bind(this);
   
-    console.log(this.props.store.getState().courses)
+    console.log(this.props.store.getState().courses);
 
   }
 
@@ -50,7 +50,7 @@ class CourseCatalog extends React.Component {
     this.props.store.dispatch(actions.undoChanges());
     this.toggleAreYouSurePrompt();
     this.setState(() => {
-      return {searchValue: ""}
+      return {searchValue: ''};
     });
   }
 
@@ -89,13 +89,13 @@ class CourseCatalog extends React.Component {
 
 
     const filteredCoursesBySearchValue = courses.filter((course) => {
-      return course.number.includes(this.state.searchValue) ||  course.title.includes(this.state.searchValue)
+      return course.number.includes(this.state.searchValue) || course.title.includes(this.state.searchValue);
     });
 
     // console.log(filteredCoursesBySearchValue)
 
     const markup = filteredCoursesBySearchValue.map((course, index) => {
-      return(<Course store={this.props.store} key={index} index={index}   
+      return (<Course store={this.props.store} key={index} index={index}   
         number={course.number} title={course.title} description={course.description} 
         link={course.link} selectedPathways={course.selectedPathways}/>);
     });
@@ -107,32 +107,32 @@ class CourseCatalog extends React.Component {
     const addButtonStyle = {
       fontSize: '50px',
       color: 'green'
-    }
+    };
 
     const undoButtonStyle = {
       fontSize: '46px',
       color: 'red'
-    }
+    };
 
     const exportButtonStyle = {
       fontSize: '46px',
       color: 'blue'
-    }
+    };
 
     return (
       <Flexbox flexDirection='row' justifyContent="center" alignItems="center" margin='20px'>
-      <Flexbox  margin='50px'  marginTop='1px'>
-        <FontAwesome name='fa-plus' className='fa-plus' style={addButtonStyle} onClick={this.toggleNewCourseView}
-        /> 
-      </Flexbox>
-      <Flexbox margin='50px' marginTop='1px'>
-      <FontAwesome name='fa-undo' className='fa-undo' style={undoButtonStyle} onClick={this.toggleAreYouSurePrompt}
-        /> 
-      </Flexbox>
-      <Flexbox margin='50px' marginTop='1px'>
-      <FontAwesome name='fa-upload' className='fa-upload' style={exportButtonStyle} onClick={this.toggleExportPrompt}
-        /> 
-      </Flexbox>
+        <Flexbox margin='50px' marginTop='1px'>
+          <FontAwesome name='fa-plus' className='fa-plus' style={addButtonStyle} onClick={this.toggleNewCourseView}
+          /> 
+        </Flexbox>
+        <Flexbox margin='50px' marginTop='1px'>
+          <FontAwesome name='fa-undo' className='fa-undo' style={undoButtonStyle} onClick={this.toggleAreYouSurePrompt}
+          /> 
+        </Flexbox>
+        <Flexbox margin='50px' marginTop='1px'>
+          <FontAwesome name='fa-upload' className='fa-upload' style={exportButtonStyle} onClick={this.toggleExportPrompt}
+          /> 
+        </Flexbox>
 
       </Flexbox>
     );
@@ -144,34 +144,34 @@ class CourseCatalog extends React.Component {
       fontSize: '20px',
       overflow: 'hidden',
       textAlign:'center'
-    }
+    };
 
     const confirmStyle = {
       fontSize: '50px',
       color: 'green',
-    }
+    };
 
     const declineStyle = {
       fontSize: '50px',
       color: 'red',
-    }
+    };
 
     return <Popup open={this.state.areYouSureViewActive}>
       <Flexbox height='200px' width='100%' flexDirection="column" alignItems='center'>
-        <Flexbox flexDirection='row' height="20%" width='100%' alignSelf='center'  marginTop='50px'   alignItems='center' justifyContent='center' 
-        style={deleteMessageStyle} >
+        <Flexbox flexDirection='row' height="20%" width='100%' alignSelf='center' marginTop='50px' alignItems='center' justifyContent='center' 
+          style={deleteMessageStyle} >
           Are you sure you want to reset the changes made during this session? 
         </Flexbox>
         <Flexbox flexDirection='row' alignItems='center' justifyContent='center' marginTop='50px'>
-        <Flexbox  marginLeft='50%'>
-        <FontAwesome name='fa-check-circle' className='fa-check-circle' style={confirmStyle} onClick={this.undoChanges}/> 
-        </Flexbox >
-        <Flexbox marginLeft='50%'>
-        <FontAwesome name='fa-times' className='fa-times' style={declineStyle} onClick={this.toggleAreYouSurePrompt}/>
-        </Flexbox>
+          <Flexbox marginLeft='50%'>
+            <FontAwesome name='fa-check-circle' className='fa-check-circle' style={confirmStyle} onClick={this.undoChanges}/> 
+          </Flexbox >
+          <Flexbox marginLeft='50%'>
+            <FontAwesome name='fa-times' className='fa-times' style={declineStyle} onClick={this.toggleAreYouSurePrompt}/>
+          </Flexbox>
         </Flexbox>
       </Flexbox>
-    </Popup>
+    </Popup>;
   }
 
   renderExportPrompt() {
@@ -180,46 +180,46 @@ class CourseCatalog extends React.Component {
       fontSize: '20px',
       overflow: 'hidden',
       textAlign:'center'
-    }
+    };
 
     const confirmStyle = {
       fontSize: '50px',
       color: 'green',
-    }
+    };
 
     const declineStyle = {
       fontSize: '50px',
       color: 'red',
-    }
+    };
 
     return (
-    <Popup open={this.state.exportPromptActive}>
-      <Flexbox height='200px' width='100%' flexDirection="column" alignItems='center'>
-        <Flexbox flexDirection='row' height="20%" width='100%' alignSelf='center'  marginTop='50px'   alignItems='center' justifyContent='center' 
-        style={deleteMessageStyle} >
+      <Popup open={this.state.exportPromptActive}>
+        <Flexbox height='200px' width='100%' flexDirection="column" alignItems='center'>
+          <Flexbox flexDirection='row' height="20%" width='100%' alignSelf='center' marginTop='50px' alignItems='center' justifyContent='center' 
+            style={deleteMessageStyle} >
           Would you like to export your changes? This change cannot be undone.  
+          </Flexbox>
+          <Flexbox flexDirection='row' alignItems='center' justifyContent='center' marginTop='50px'>
+            <Flexbox marginLeft='50%'>
+              <FontAwesome name='fa-check-circle' className='fa-check-circle' style={confirmStyle} onClick={this.exportCourses}/> 
+            </Flexbox >
+            <Flexbox marginLeft='50%'>
+              <FontAwesome name='fa-times' className='fa-times' style={declineStyle} onClick={this.toggleExportPrompt}/>
+            </Flexbox>
+          </Flexbox>
         </Flexbox>
-        <Flexbox flexDirection='row' alignItems='center' justifyContent='center' marginTop='50px'>
-        <Flexbox  marginLeft='50%'>
-        <FontAwesome name='fa-check-circle' className='fa-check-circle' style={confirmStyle} onClick={this.exportCourses}/> 
-        </Flexbox >
-        <Flexbox marginLeft='50%'>
-        <FontAwesome name='fa-times' className='fa-times' style={declineStyle} onClick={this.toggleExportPrompt}/>
-        </Flexbox>
-        </Flexbox>
-      </Flexbox>
-    </Popup>
-    )
+      </Popup>
+    );
   }
 
   renderNewCourseView() {
-    return <Popup open={this.state.newCourseViewActive}><CourseTemplate store={this.props.store} notifyParent={this.toggleNewCourseView}/></Popup>
+    return <Popup open={this.state.newCourseViewActive}><CourseTemplate store={this.props.store} notifyParent={this.toggleNewCourseView}/></Popup>;
   }
 
   renderSearchBar() {
     return <Flexbox flexDirection='row' alignSelf='center' marginBottom='50px' ><SearchBar onSearch={this.handleSearch} marginBottom='50px'
-    value={this.state.searchValue}/>
-    </Flexbox>
+      value={this.state.searchValue}/>
+    </Flexbox>;
   }
 
 
@@ -227,7 +227,7 @@ class CourseCatalog extends React.Component {
     console.log('catalog rendered');
     const headerStyle = {
       fontSize: '30px'
-    }
+    };
     return (
       <Flexbox flexDirection="column" justifyContent="center" alignItems="center">
         <Flexbox height='50px' width='100%' marginBottom='50px' justifyContent="center" alignSelf='center' style={headerStyle}>Course Catalog</Flexbox>
@@ -238,7 +238,7 @@ class CourseCatalog extends React.Component {
         {this.renderAreYouSurePrompt()}
         {this.renderExportPrompt()}
       </Flexbox>
-    )
+    );
   }
 }
 

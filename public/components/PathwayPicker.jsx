@@ -6,7 +6,7 @@ import Flexbox from 'flexbox-react';
 class PathwayPicker extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {pathwaysActiveOrNot: [], numberOfChecked: 0}
+    this.state = {pathwaysActiveOrNot: [], numberOfChecked: 0};
 
     const allPathways = props.store.getState().pathways;
 
@@ -18,7 +18,7 @@ class PathwayPicker extends React.Component {
       this.state.pathwaysActiveOrNot.push({
         id: pathway.id,
         active: active
-      })
+      });
     });
 
     this.notifyParent = this.notifyParent.bind(this);
@@ -31,7 +31,7 @@ class PathwayPicker extends React.Component {
     let selectedPathways = [];
     this.state.pathwaysActiveOrNot.forEach((item) => {
       if (item.active) selectedPathways.push(item.id);
-    })
+    });
     this.props.notifyParentOfChange(selectedPathways);
   }
 
@@ -42,15 +42,15 @@ class PathwayPicker extends React.Component {
     }
 
     const pathway = this.state.pathwaysActiveOrNot.filter((item) => {
-      return item.id === event.target.name
-    })
+      return item.id === event.target.name;
+    });
 
     console.log(pathway);
 
     this.setState((prevState) => {
-      let number = prevState.numberOfChecked
+      let number = prevState.numberOfChecked;
       if (pathway[0].active) number--;
-      else number++
+      else number++;
 
       let newState = prevState.pathwaysActiveOrNot.splice(0);
       newState.forEach((item, index) => {
@@ -59,15 +59,15 @@ class PathwayPicker extends React.Component {
         }
       });
 
-      return {pathwaysActiveOrNot: newState, numberOfChecked: number}
-    }, () => this.notifyParent())
+      return {pathwaysActiveOrNot: newState, numberOfChecked: number};
+    }, () => this.notifyParent());
   }
 
   lookupPathwayName(id) {
     let res;
     const allPathways = this.props.store.getState().pathways;
     allPathways.forEach((pathway) => {
-      if (pathway.id === id) res = pathway.name
+      if (pathway.id === id) res = pathway.name;
     });
     return res;
   }
@@ -79,7 +79,7 @@ class PathwayPicker extends React.Component {
       marginBottom: '7.5px',
       marginLeft: '5px',
       fontSize: '20px'
-    }
+    };
 
     const markup = this.state.pathwaysActiveOrNot.map((item, index) => {
       const nameStyle = {
@@ -87,24 +87,24 @@ class PathwayPicker extends React.Component {
         marginBottom: '5px',
         marginRight: '5px',
         fontSize: '13px'
-      }
+      };
       const name = this.lookupPathwayName(item.id);
       const checked = item.active;
       return <Flexbox key={index}>
         <label style={nameStyle}
         >{name}
-       <input name={item.id} className={boxStyle} type="checkbox" checked={checked} onChange={this.handleSelect}/>
-      </label>
-      </Flexbox>
+          <input name={item.id} className={boxStyle} type="checkbox" checked={checked} onChange={this.handleSelect}/>
+        </label>
+      </Flexbox>;
     });
-    return markup
+    return markup;
   }
 
 
   render() {
     return <Flexbox flexDirection='column'>
       {this.renderCheckboxes()}
-    </Flexbox>
+    </Flexbox>;
   }
 }
 

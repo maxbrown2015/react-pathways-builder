@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { mainReducer as reducers } from './reducers';
 import * as actions from './actions/index';
-import * as initialState from './initialState'
+import * as initialState from './initialState';
 import CourseCatalog from './components/CourseCatalog';
 import axios from 'axios';
 
@@ -23,7 +23,7 @@ function loadFromMongoAndInitialize() {
         description: course.description,
         link: course.link,
         selectedPathways: course.selectedPathways
-      }
+      };
       courses.push(courseViewData);
     });
 
@@ -34,23 +34,23 @@ function loadFromMongoAndInitialize() {
         color: pathway.color,
         highlight: pathway.highlight,
         description: pathway.description,
-      }
+      };
       pathways.push(pathwayViewData);
     });
 
     // sort courses by number
-    courses.sort(function(a, b) {
+    courses.sort(function (a, b) {
       const aNum = Number(a.number);
       const bNum = Number(b.number);
       return aNum - bNum;
     });
 
 
-   // console.log(courses);
+    // console.log(courses);
     const state = {
       courses: courses,
       pathways: pathways
-    }
+    };
     const store = createStore(reducers, state);
     store.dispatch(actions.cacheState());
     ReactDOM.render(
@@ -61,10 +61,10 @@ function loadFromMongoAndInitialize() {
       
     document.addEventListener('DOMContentLoaded', () => {
       ReactDOM.render(
-         <CourseCatalog store={store}/>,
-         document.getElementById('container')
-       );
-     });
+        <CourseCatalog store={store}/>,
+        document.getElementById('container')
+      );
+    });
 
   }).catch(function (error) {
     console.log(error);

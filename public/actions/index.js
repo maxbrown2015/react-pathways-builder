@@ -1,14 +1,12 @@
 
 // CIS 197 - React HW
-
-
 const changeCourse = (index, newCourse) => {
   return {
-    type: "CHANGE_COURSE",
+    type: 'CHANGE_COURSE',
     index: index,
     newCourse: newCourse
-  }
-} 
+  };
+};
 
 const deleteCourse = (index) => {
   return {
@@ -22,7 +20,7 @@ const addCourse = (newCourse) => {
     type: 'ADD_COURSE',
     newCourse: newCourse
   };
-}
+};
 
 const changePathway = (index, pathway) => {
   return {
@@ -30,25 +28,25 @@ const changePathway = (index, pathway) => {
     index: index,
     pathway: pathway
   };
-}
+};
 
 const undoChanges = () => {
   return {
     type: 'UNDO_CHANGES'
   };
-}
+};
 
 const exportData = () => {
   return {
     type: 'EXPORT'
   };
-}
+};
 
 const cacheState = () => {
   return {
     type: 'CACHE'
   };
-}
+};
 
 
 
