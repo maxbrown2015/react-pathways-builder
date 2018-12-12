@@ -46,8 +46,8 @@ mongoose.connect(dbURI,function(err){
 global.mongoose = mongoose;
 
 
-app.get('/editor', (req, res) => {
-  res.render('views/index');
+app.get('/', (req, res) => {
+  res.render('index');
 });
 
 // Start server

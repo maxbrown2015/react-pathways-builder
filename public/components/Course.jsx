@@ -77,14 +77,16 @@ class Course extends React.Component {
       selectedPathways: this.state.selectedPathways,
     }
 
-    this.props.store.dispatch(actions.changeCourse(this.props.index, newCourse));
     this.toggleEditMode();
+    this.props.store.dispatch(actions.changeCourse(this.props.index, newCourse));
+
   }
 
   deleteCourse() {
     console.log("deleting course: " + this.props.index);
+    this.toggleDeletePrompt();  
     this.props.store.dispatch(actions.deleteCourse(this.props.index));
-    this.toggleDeletePrompt();
+
   }
 
  toggleEditMode() {

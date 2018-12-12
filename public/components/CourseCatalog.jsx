@@ -22,9 +22,7 @@ class CourseCatalog extends React.Component {
       exportPromptActive: false,
       searchValue: "",
     }
-
-
-
+    
     this.undoChanges = this.undoChanges.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.exportCourses = this.exportCourses.bind(this);
@@ -51,6 +49,9 @@ class CourseCatalog extends React.Component {
   undoChanges() {
     this.props.store.dispatch(actions.undoChanges());
     this.toggleAreYouSurePrompt();
+    this.setState(() => {
+      return {searchValue: ""}
+    });
   }
 
   exportCourses() {
@@ -83,13 +84,8 @@ class CourseCatalog extends React.Component {
   }
 
   renderCourses() {
-    let courses;
-    console.log(this.state.reduxState);
-    if (this.state.reduxState.courses === undefined) {
-      courses = this.props.store.getState().courses;
-    } else {
-      courses = this.state.reduxState.courses;
-    }
+
+    const courses = this.props.store.getState().courses;
 
 
     const filteredCoursesBySearchValue = courses.filter((course) => {
@@ -229,9 +225,12 @@ class CourseCatalog extends React.Component {
 
   render() {
     console.log('catalog rendered');
+    const headerStyle = {
+      fontSize: '30px'
+    }
     return (
       <Flexbox flexDirection="column" justifyContent="center" alignItems="center">
-        <Flexbox height='50px' width='100%' justifyContent="center" alignSelf='center'>Course Catalog</Flexbox>
+        <Flexbox height='50px' width='100%' marginBottom='50px' justifyContent="center" alignSelf='center' style={headerStyle}>Course Catalog</Flexbox>
         {this.renderSearchBar()}
         {this.renderButtons()}
         {this.renderCourses()}
