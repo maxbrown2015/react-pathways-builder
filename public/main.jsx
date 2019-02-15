@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { mainReducer as reducers } from './reducers';
 import * as actions from './actions/index';
-import * as initialState from './initialState';
 import CourseCatalog from './components/CourseCatalog';
 import axios from 'axios';
 

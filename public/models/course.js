@@ -5,6 +5,8 @@ const Course = new mongoose.Schema({
   title: { type: String },
   description: { type: String },
   link: { type: String },
+  type: {type: String},
+  instructor: {type: String},
   selectedPathways: { type: Array }
 });
 

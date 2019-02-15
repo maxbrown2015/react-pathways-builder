@@ -84,9 +84,8 @@ class CourseCatalog extends React.Component {
   }
 
   renderCourses() {
-
+    
     const courses = this.props.store.getState().courses;
-
 
     const filteredCoursesBySearchValue = courses.filter((course) => {
       return course.number.includes(this.state.searchValue) || course.title.includes(this.state.searchValue);

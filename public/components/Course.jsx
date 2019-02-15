@@ -17,6 +17,7 @@ class Course extends React.Component {
       title: props.title,
       description: props.description,
       link: props.link,
+      type: props.type,
       selectedPathways: props.selectedPathways
     };
 
@@ -106,6 +107,7 @@ class Course extends React.Component {
     if (event.target.name === 'link') {
       this.setState({link: event.target.value});
     }
+    
   }
 
   updateSelectedPathways(selected) {

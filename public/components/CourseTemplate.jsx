@@ -74,7 +74,8 @@ class CourseTemplate extends React.Component {
   }
 
   validateNewCourse() {
-    return this.validateNumber() && this.validateDescriptionAndTitle() && this.validateLink() && this.validatePathways();
+    return true;
+    // return this.validateNumber() && this.validateDescriptionAndTitle() && this.validateLink() && this.validatePathways();
   }
 
   validateNumber() {
