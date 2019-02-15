@@ -1,0 +1,78 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title id="titlename"> Login </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Boostrap themes -->
+        <!-- Latest jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" 
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+    <ul class="nav nav-tabs">
+        <li class="nav-item" id="loginTab">
+            <a class="nav-link" data-toggle="tab" href="#loginForm">Login</a>
+        </li>
+        <li class="nav-item" id="registrationTab">
+            <a class="nav-link" data-toggle="tab" href="#registrationForm">Register</a>
+        </li>
+    </ul>
+
+    <!-- Login Form -->
+    <div id="loginForm"  class="tab-pane fade in active">
+        <form>
+            <div class="form-group">
+                <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email" required="true">
+            </div>
+            <div class="form-group">
+                    <input type="password" class="form-control" id="loginPassword" placeholder="Password" required="true">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <!-- Registration Form -->
+    <div id="registrationForm" class="tab-pane fade">
+        <form>
+            <div class="form-group">
+                <input type="email" class="form-control" id="registerEmail" aria-describedby="emailHelp" placeholder="Enter email" required="true">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="registerName" placeholder="Name" required="true">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="registerPassword" placeholder="Password" required="true">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+<script type="text/JavaScript">
+    /**
+     * Piece of code to dynamically change the page title when clicked 
+    */
+
+    $('#loginTab').on('click', () => {
+        console.log('eventFired');
+        $('#titlename').html('Login');
+    });
+
+    $('#registrationTab').on('click', () => {
+        $('#titlename').html('Registration');
+    })
+</script>
+</body>
+</html>

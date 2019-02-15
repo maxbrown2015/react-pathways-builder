@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import ImportExportRouter from './routes/ImportExportRouter';
+import authenticateRouter from './routes/authenticate';
 
 
 let app = express();
@@ -30,17 +31,17 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use('/importexport', ImportExportRouter);  
+app.use(authenticateRouter);
 
 //mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/Final')
 //console.log(Course);
-var dbURI='mongodb://maxbrown:pathways1@ds153851.mlab.com:53851/upenn_history_pathways'
-mongoose.connect(dbURI,function(err){    
-    if(err){
-    console.log('Some problem with the connection ' +err)   
-    } 
-    else {
-      console.log('The Mongoose connection is ready');
-    }
+let dbURI = 'mongodb://maxbrown:pathways1@ds153851.mlab.com:53851/upenn_history_pathways';
+mongoose.connect(dbURI,function (err) {    
+  if (err) {
+    console.log('Some problem with the connection ' + err);   
+  } else {
+    console.log('The Mongoose connection is ready');
+  }
 });
 
 global.mongoose = mongoose;
