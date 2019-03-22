@@ -3,7 +3,7 @@ import * as actions from '../actions/index.js';
 import Flexbox from 'flexbox-react';
 import FontAwesome from 'react-fontawesome';
 import Popup from 'reactjs-popup';
-import PathwayPicker from './PathwayPicker';
+import PathwayPicker from './PathwayPicker.jsx';
 
 
 class Course extends React.Component {

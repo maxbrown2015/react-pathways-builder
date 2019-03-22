@@ -1,9 +1,9 @@
 import React from 'react';
-import Course from './Course';
+import Course from './Course.jsx';
 import * as actions from '../actions/index.js';
 import Flexbox from 'flexbox-react';
 import FontAwesome from 'react-fontawesome';
-import CourseTemplate from './CourseTemplate';
+import CourseTemplate from './CourseTemplate.jsx';
 import Popup from 'reactjs-popup';
 import SearchBar from '@opuscapita/react-searchbar';
 

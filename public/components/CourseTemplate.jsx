@@ -1,8 +1,8 @@
 import React from 'react';
-import Course from './Course';
+import Course from './Course.jsx';
 import * as actions from '../actions/index.js';
 import Flexbox from 'flexbox-react';
-import PathwayPicker from './PathwayPicker';
+import PathwayPicker from './PathwayPicker.jsx';
 import FontAwesome from 'react-fontawesome';
 
 class CourseTemplate extends React.Component {
