@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
-const Course = require('../public/models/Course');
+const Course = require('../public/models/course');
 const Pathway = require('../public/models/Pathway');
 
 router.route('/export').post((req, res) => {
@@ -41,8 +41,9 @@ router.route('/export').post((req, res) => {
       const pathways = req.body.pathways;
       Pathway.remove({}, (err, res) => {
         if (err) {
-console.log(err)
-;}
+          console.log(err)
+          ;
+        }
         pathways.forEach((pathway) => {
           const pathwayModelItem = new Pathway({
             name: pathway.name,
@@ -53,8 +54,9 @@ console.log(err)
           });
           pathwayModelItem.save((err, res) => {
             if (err) {
-console.log(err)
-;}
+              console.log(err)
+              ;
+            }
             console.log('Pathway saved successfully');
           });
         });
@@ -70,8 +72,9 @@ router.route('/import').get(function (req, res) {
     } else {
       Pathway.find((err, pathways) => {
         if (err) {
-console.log(err)
-;}
+          console.log(err)
+          ;
+        }
         res.json({
           courses: courses,
           pathways: pathways,

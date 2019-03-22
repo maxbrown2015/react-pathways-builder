@@ -1,10 +1,9 @@
-import express from 'express';
-import bodyParser from 'body-parser';
+const express = require('express');
+const bodyParser = require('body-parser');
 
-var router = express.Router();
+const router = express.Router();
+
 router.use(bodyParser.urlencoded({ extended: false }));
-
-
 router.get('/editor', function (req, res, next) {
   res.render('index');
 });

@@ -1,4 +1,4 @@
-import express from 'express'
+const express = require('express');
 
 const router = express.Router();
 
@@ -6,22 +6,22 @@ const router = express.Router();
  * Login route
  */
 router.get('/login', (req, res) => {
-    res.render('login.html');
+  res.render('login.html');
 });
 
 /**
  * Registration route
  */
-router.get('/register', () => {
-    res.send('login.html');
+router.get('/register', (req, res) => {
+  res.send('login.html');
 });
 
 /**
  * Logout route
  */
 
-router.get('/logout', () => {
-    res.send('router under development');
-})
+router.get('/logout', (req, res) => {
+  res.send('router under development');
+});
 
 module.exports = router;
