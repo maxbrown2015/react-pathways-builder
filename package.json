@@ -1,13 +1,20 @@
 {
-  "name": "CIS197-React-HW",
+  "name": "React-Pathways-Builder",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "nodemon app.js --exec babel-node --presets es2015",
-    "test": "mocha --compilers jsx:babel-register"
+    "test": "mocha --compilers jsx:babel-register",
+    "dev": "webpack-dev-server --open --mode=development",
+    "web:build": "webpack --mode=production"
   },
   "author": "Devesh Dayal, Steve Vitali",
   "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-react": "*",
     "babel-register": "^6.23.0",
     "browserify": "^16.2.3",
@@ -26,6 +33,7 @@
     "gulp": "^3.9.1",
     "gulp-eslint": "*",
     "gulp-zip": "*",
+    "html-webpack-plugin": "^3.2.0",
     "jsdom": "*",
     "mocha": "*",
     "nodemon": "^1.18.7",
@@ -33,7 +41,10 @@
     "redux-devtools": "*",
     "sinon": "*",
     "vinyl-source-stream": "*",
-    "watchify": "*"
+    "watchify": "*",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
